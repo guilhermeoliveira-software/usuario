@@ -1,9 +1,6 @@
 package com.COSTADev.usuario.infrasctruture.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -11,6 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "enderecos")
+@Builder
 public class Enderecos {
 
     @Id
