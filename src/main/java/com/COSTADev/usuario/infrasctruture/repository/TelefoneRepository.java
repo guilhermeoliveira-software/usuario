@@ -1,6 +1,7 @@
 package com.COSTADev.usuario.infrasctruture.repository;
 
-import com.costadev.aprendendo_spring.infra.entity.Telefone;
+
+import com.COSTADev.usuario.infrasctruture.entity.Telefone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
