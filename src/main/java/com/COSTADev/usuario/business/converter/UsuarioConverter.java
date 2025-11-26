@@ -8,6 +8,7 @@ import com.COSTADev.usuario.infrasctruture.entity.Telefone;
 import com.COSTADev.usuario.infrasctruture.entity.Usuario;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -18,14 +19,19 @@ public class UsuarioConverter {
                 .nome(usuarioDTO.getNome())
                 .email(usuarioDTO.getEmail())
                 .senha(usuarioDTO.getSenha())
-                .enderecos(paraListaEndereco(usuarioDTO.getEnderecosDTOS()))
-                .telefones(paraListaTelefone(usuarioDTO.getTelefoneDTOS()))
+                .enderecos(paraListaEndereco(usuarioDTO.getEnderecos()))
+                .telefones(paraListaTelefone(usuarioDTO.getTelefones()))
                .build();
     }
 
 
     public List<Enderecos> paraListaEndereco (List<EnderecosDTO> enderecosDTOS){
-            return enderecosDTOS.stream().map(this::paraEnderecos).toList();
+            //return enderecosDTOS.stream().map(this::paraEnderecos).toList();
+        List<Enderecos> enderecos = new ArrayList<>();
+        for (EnderecosDTO enderecosDTO : enderecosDTOS){
+            enderecos.add(paraEnderecos(enderecosDTO));
+        }
+        return enderecos;
     }
 
     public Enderecos paraEnderecos(EnderecosDTO enderecosDTO){
@@ -59,8 +65,8 @@ public class UsuarioConverter {
                 .nome(usuarioDTO.getNome())
                 .email(usuarioDTO.getEmail())
                 .senha(usuarioDTO.getSenha())
-                .enderecos(paraListaEnderecoDTO(usuarioDTO.getEnderecosDTOS()))
-                .telefones(paraListaTelefoneDTO(usuarioDTO.getTelefoneDTOS()))
+                .enderecos(paraListaEnderecoDTO(usuarioDTO.getEnderecos()))
+                .telefones(paraListaTelefoneDTO(usuarioDTO.getTelefones()))
                 .build();
 }
 
