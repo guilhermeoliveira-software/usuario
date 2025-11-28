@@ -1,5 +1,6 @@
 package com.COSTADev.usuario.infrasctruture.entity;
 
+import com.COSTADev.usuario.business.dto.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,14 +40,15 @@ public class Usuario implements UserDetails {
         return List.of();
     }
 
-    @Override
-    public String getPassword() {
-        return senha;
-    }
 
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
     }
 }
 
