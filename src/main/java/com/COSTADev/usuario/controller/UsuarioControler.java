@@ -27,14 +27,12 @@ public class UsuarioControler {
 
 
    @PostMapping("/login")
-    public String login(@RequestBody UsuarioDTO usuarioDTO){
+    public String loginUsuario(@RequestBody UsuarioDTO usuarioDTO){
        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                usuarioDTO.getEmail(), usuarioDTO.getSenha()
       ));
     return "Bearer " + jwtUtil.generateToken(authentication.getName());
    }
-
-
 
     @GetMapping
     public ResponseEntity<Usuario> buscarPorEmail(@RequestParam ("email") String email){
