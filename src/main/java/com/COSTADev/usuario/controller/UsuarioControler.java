@@ -28,9 +28,9 @@ public class UsuarioControler {
 
    @PostMapping("/login")
     public String loginUsuario(@RequestBody UsuarioDTO usuarioDTO){
-       Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-               usuarioDTO.getEmail(), usuarioDTO.getSenha()
-      ));
+       Authentication authentication = authenticationManager.authenticate(
+               new UsernamePasswordAuthenticationToken(
+               usuarioDTO.getEmail(), usuarioDTO.getSenha()));
     return "Bearer " + jwtUtil.generateToken(authentication.getName());
    }
 

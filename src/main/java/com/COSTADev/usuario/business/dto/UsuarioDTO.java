@@ -1,5 +1,6 @@
 package com.COSTADev.usuario.business.dto;
 
+
 import lombok.*;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public class UsuarioDTO {
     private String email;
     private String senha;
 
-    private List<EnderecosDTO> enderecos;
-    private List<TelefoneDTO> telefone;
+    private List<EnderecoDTO> enderecos;
+    private List<TelefoneDTO> telefones;
 }

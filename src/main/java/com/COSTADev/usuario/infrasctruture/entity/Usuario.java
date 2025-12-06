@@ -1,6 +1,5 @@
 package com.COSTADev.usuario.infrasctruture.entity;
 
-import com.COSTADev.usuario.business.dto.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,7 +28,7 @@ public class Usuario implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private List<Enderecos> enderecos;
+    private List<Endereco> enderecos;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")

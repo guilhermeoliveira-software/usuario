@@ -1,6 +1,5 @@
 package com.COSTADev.usuario.business.dto;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter
@@ -8,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EnderecosDTO {
+public class EnderecoDTO {
 
     private Long numero;
     private String rua;
