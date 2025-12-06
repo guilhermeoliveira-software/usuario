@@ -23,6 +23,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
 
     public UsuarioDTO salvarUsuario (UsuarioDTO usuarioDTO){
@@ -57,6 +58,18 @@ public class UsuarioService {
          usuarioRepository.deleteByEmail(email);
     }
 
+    public UsuarioDTO atualizarDadosUsuario(String token,  UsuarioDTO dto){
+        String email = jwtUtil.extrairEmailToken(token.substring(7));
+
+        dto.setSenha(dto.getSenha()!= null ? passwordEncoder.encode(dto.getSenha()) : null);
+
+        Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(()->
+                new ResourceNotFoundException("Email não localizado"));
+
+        Usuario usuario = usuarioConverter.updateUsuario(dto, usuarioEntity);
+
+        return usuarioConverter.paraUsuarioDTO(usuarioRepository.save(usuario));
+    }
 
 
 

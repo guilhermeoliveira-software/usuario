@@ -5,6 +5,7 @@ import com.COSTADev.usuario.business.dto.UsuarioDTO;
 import com.COSTADev.usuario.infrasctruture.entity.Usuario;
 import com.COSTADev.usuario.infrasctruture.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,4 +46,9 @@ public class UsuarioControler {
          return ResponseEntity.ok().build();
     }
 
+    @PutMapping
+    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO dto,
+                                                           @RequestHeader ("Authorization") String token){
+        return ResponseEntity.ok(usuarioService.atualizarDadosUsuario(token,dto));
+    }
 }
