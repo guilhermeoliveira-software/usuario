@@ -9,7 +9,7 @@ import lombok.*;
 @Entity
 @Table(name = "enderecos")
 @Builder
-public class Enderecos {
+public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

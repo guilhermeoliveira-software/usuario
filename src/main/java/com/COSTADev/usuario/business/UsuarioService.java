@@ -49,7 +49,7 @@ public class UsuarioService {
 
     public Usuario buscaUsuarioPorEmail(String email){
         return usuarioRepository.findByEmail(email).orElseThrow(()
-                -> new ResourceNotFoundException("Email já cadastrado." + email)
+                -> new ResourceNotFoundException("Usuario não encontrado. " + email)
         );
     }
 
