@@ -1,6 +1,8 @@
 package com.COSTADev.usuario.controller;
 
 import com.COSTADev.usuario.business.UsuarioService;
+import com.COSTADev.usuario.business.dto.EnderecoDTO;
+import com.COSTADev.usuario.business.dto.TelefoneDTO;
 import com.COSTADev.usuario.business.dto.UsuarioDTO;
 import com.COSTADev.usuario.infrasctruture.entity.Usuario;
 import com.COSTADev.usuario.infrasctruture.security.JwtUtil;
@@ -36,7 +38,7 @@ public class UsuarioControler {
    }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscarPorEmail(@RequestParam ("email") String email){
+    public ResponseEntity<UsuarioDTO> buscarPorEmail(@RequestParam ("email") String email){
         return ResponseEntity.ok(usuarioService.buscaUsuarioPorEmail(email));
     }
 
@@ -50,5 +52,18 @@ public class UsuarioControler {
     public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO dto,
                                                            @RequestHeader ("Authorization") String token){
         return ResponseEntity.ok(usuarioService.atualizarDadosUsuario(token,dto));
+    }
+
+    @PutMapping("/enderecos")
+    public ResponseEntity<EnderecoDTO> atualizaEndereco(@RequestBody EnderecoDTO dto,
+                                                        @RequestParam ("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaEndereco(id,dto));
+    }
+
+
+    @PutMapping("/telefones")
+    public ResponseEntity<TelefoneDTO> atualizaTelefone(@RequestBody TelefoneDTO dto,
+                                                        @RequestParam ("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaTelefone(id,dto));
     }
 }
