@@ -4,10 +4,11 @@ import com.COSTADev.usuario.business.UsuarioService;
 import com.COSTADev.usuario.business.dto.EnderecoDTO;
 import com.COSTADev.usuario.business.dto.TelefoneDTO;
 import com.COSTADev.usuario.business.dto.UsuarioDTO;
-import com.COSTADev.usuario.infrasctruture.entity.Usuario;
 import com.COSTADev.usuario.infrasctruture.security.JwtUtil;
+import com.COSTADev.usuario.infrasctruture.security.SecurityConfig;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/usuario")
 @RequiredArgsConstructor
+@Tag(name = "Tarefas", description = "Cadastro de Tarefas de Usuarios")
+@SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
 public class UsuarioControler {
 
     private final UsuarioService usuarioService;
