@@ -1,9 +1,11 @@
 package com.COSTADev.usuario.controller;
 
 import com.COSTADev.usuario.business.UsuarioService;
+import com.COSTADev.usuario.business.ViaCepService;
 import com.COSTADev.usuario.business.dto.EnderecoDTO;
 import com.COSTADev.usuario.business.dto.TelefoneDTO;
 import com.COSTADev.usuario.business.dto.UsuarioDTO;
+import com.COSTADev.usuario.infrasctruture.client.ViaCepDTO;
 import com.COSTADev.usuario.infrasctruture.security.JwtUtil;
 import com.COSTADev.usuario.infrasctruture.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +29,7 @@ public class UsuarioControler {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final ViaCepService viaCepService;
 
     @PostMapping
     @Operation(summary = "Salvar Usuarios", description = "Criar um novo usuario")
@@ -133,4 +136,10 @@ public class UsuarioControler {
         return ResponseEntity.ok(usuarioService.cadastroTelefone(token,dto));
     }
 
+
+
+    @GetMapping("/enderecos/{cep}")
+    public ResponseEntity<ViaCepDTO>bsucarDadosCep(@PathVariable("cep")String cep){
+        return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));
+    }
 }
