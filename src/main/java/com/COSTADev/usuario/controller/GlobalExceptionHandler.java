@@ -1,6 +1,7 @@
 package com.COSTADev.usuario.controller;
 
 import com.COSTADev.usuario.infrasctruture.exceptions.ConflictException;
+import com.COSTADev.usuario.infrasctruture.exceptions.IllegalArgumentException;
 import com.COSTADev.usuario.infrasctruture.exceptions.ResourceNotFoundException;
 import com.COSTADev.usuario.infrasctruture.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<String> handlerUnhathorizedException(UnauthorizedException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handlerIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
