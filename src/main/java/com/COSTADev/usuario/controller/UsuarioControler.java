@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioControler {
 
     private final UsuarioService usuarioService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
     private final ViaCepService viaCepService;
 
     @PostMapping
@@ -46,11 +44,8 @@ public class UsuarioControler {
     @ApiResponse(responseCode = "200", description = "Login feito com sucesso")
     @ApiResponse(responseCode = "401", description = "Credencias Inválidas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public String loginUsuario(@RequestBody UsuarioDTO usuarioDTO){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        usuarioDTO.getEmail(), usuarioDTO.getSenha()));
-        return "Bearer " + jwtUtil.generateToken(authentication.getName());
+    public ResponseEntity<String> loginUsuario(@RequestBody UsuarioDTO usuarioDTO){
+       return ResponseEntity.ok(usuarioService.autenticarUsuario(usuarioDTO));
     }
 
     @GetMapping
