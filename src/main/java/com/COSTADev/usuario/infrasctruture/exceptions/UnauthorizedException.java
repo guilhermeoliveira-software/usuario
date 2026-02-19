@@ -2,7 +2,7 @@ package com.COSTADev.usuario.infrasctruture.exceptions;
 
 import javax.security.sasl.AuthenticationException;
 
-public class UnauthorizedException extends AuthenticationException {
+public class UnauthorizedException extends RuntimeException {
 
     public UnauthorizedException(String message) {
         super(message);
