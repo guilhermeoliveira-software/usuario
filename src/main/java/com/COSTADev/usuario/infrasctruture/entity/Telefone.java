@@ -3,6 +3,8 @@ package com.COSTADev.usuario.infrasctruture.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -10,11 +12,11 @@ import lombok.*;
 @Entity
 @Table(name = "telefone")
 @Builder
-public class Telefone {
+public class Telefone implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "numero", length = 10)
     private String numero;
