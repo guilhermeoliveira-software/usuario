@@ -2,7 +2,6 @@ package com.COSTADev.usuario.infrasctruture.security;
 
 import com.COSTADev.usuario.infrasctruture.exceptions.dto.ErrorResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -73,7 +72,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
     }
 
-    private String buildError(int status, String message, String path, String error) {
+    private String buildError(int status, String message, String path, String error) throws JsonProcessingException {
         ErrorResponseDTO errorResponseDTO = ErrorResponseDTO.builder()
                 .timestamp(LocalDateTime.now())
                 .message(message)

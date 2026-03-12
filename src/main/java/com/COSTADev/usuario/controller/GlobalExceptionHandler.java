@@ -5,7 +5,6 @@ import com.COSTADev.usuario.infrasctruture.exceptions.IllegalArgumentException;
 import com.COSTADev.usuario.infrasctruture.exceptions.ResourceNotFoundException;
 import com.COSTADev.usuario.infrasctruture.exceptions.UnauthorizedException;
 import com.COSTADev.usuario.infrasctruture.exceptions.dto.ErrorResponseDTO;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +16,15 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    String mensagem = "Not Found";
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handlerResourceNotFoundException(ResourceNotFoundException ex,
                                                                              HttpServletRequest Request){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildError(HttpStatus.NO_CONTENT.value(),
                 ex.getMessage(),
                 Request.getRequestURI(),
-                "Not Found"
+                mensagem
         ));
     }
 
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(buildError(HttpStatus.CONFLICT.value(),
                 ex.getMessage(),
                 Request.getRequestURI(),
-                "Not Found"
+                mensagem
         ));
     }
 
@@ -44,7 +45,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(buildError(HttpStatus.UNAUTHORIZED.value(),
                 ex.getMessage(),
                 Request.getRequestURI(),
-                "Not Found"
+                mensagem
         ));
     }
 
@@ -54,7 +55,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildError(HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage(),
                 Request.getRequestURI(),
-                "Not Found"
+                mensagem
         ));
     }
 
