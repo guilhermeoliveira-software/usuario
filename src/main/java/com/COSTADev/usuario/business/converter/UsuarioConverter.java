@@ -28,7 +28,6 @@ public class UsuarioConverter {
 
 
     public List<Endereco> paraListaEndereco (List<EnderecoDTO> enderecoDTOS){
-            //return enderecosDTOS.stream().map(this::paraEnderecos).toList();
         List<Endereco> enderecos = new ArrayList<>();
         for (EnderecoDTO enderecoDTO : enderecoDTOS){
             enderecos.add(paraEnderecos(enderecoDTO));
@@ -49,7 +48,6 @@ public class UsuarioConverter {
 
 
     public List<Telefone> paraListaTelefone(List<TelefoneDTO> telefones){
-        // return telefones.stream().map(this::paraTelefone).toList();
         if (telefones == null || telefones.isEmpty()) {
             return List.of(); // retorna lista vazia, nunca null
         }
@@ -119,7 +117,7 @@ public TelefoneDTO paraTelefoneDTO (Telefone telefone){
 public Usuario updateUsuario(UsuarioDTO usuarioDTO, Usuario entity){
         return Usuario.builder()
                 .nome(usuarioDTO.getNome() != null ? usuarioDTO.getNome() : entity.getNome())
-                .Id(entity.getId())
+                .id(entity.getId())
                 .senha(usuarioDTO.getSenha() != null ? usuarioDTO.getSenha() : entity.getSenha())
                 .enderecos(entity.getEnderecos())
                 .telefones(entity.getTelefones())
@@ -128,7 +126,7 @@ public Usuario updateUsuario(UsuarioDTO usuarioDTO, Usuario entity){
 
     public Endereco updateEndereco(EnderecoDTO dto, Endereco entity) {
         return Endereco.builder()
-                .Id(entity.getId())
+                .id(entity.getId())
                 .rua(dto.getRua() != null ? dto.getRua() : entity.getRua())
                 .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
                 .cidade(dto.getCidade() != null ? dto.getCidade() : entity.getCidade())
@@ -141,7 +139,7 @@ public Usuario updateUsuario(UsuarioDTO usuarioDTO, Usuario entity){
 
     public Telefone updateTelefone(TelefoneDTO dto, Telefone entity) {
         return Telefone.builder()
-                .Id(entity.getId())
+                .id(entity.getId())
                 .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
                 .ddd(dto.getDdd() != null ? dto.getDdd() : entity.getDdd())
                 .build();
