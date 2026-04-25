@@ -18,7 +18,7 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @Column(name = "nome", length = 100)
     private String nome;
     @Column(name = "email", length = 150)
@@ -37,6 +37,26 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 

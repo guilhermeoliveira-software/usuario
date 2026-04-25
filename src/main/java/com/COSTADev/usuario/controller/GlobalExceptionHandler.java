@@ -4,33 +4,68 @@ import com.COSTADev.usuario.infrasctruture.exceptions.ConflictException;
 import com.COSTADev.usuario.infrasctruture.exceptions.IllegalArgumentException;
 import com.COSTADev.usuario.infrasctruture.exceptions.ResourceNotFoundException;
 import com.COSTADev.usuario.infrasctruture.exceptions.UnauthorizedException;
+import com.COSTADev.usuario.infrasctruture.exceptions.dto.ErrorResponseDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDateTime;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    String mensagem = "Not Found";
+
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handlerResourceNotFoundException(ResourceNotFoundException ex){
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponseDTO> handlerResourceNotFoundException(ResourceNotFoundException ex,
+                                                                             HttpServletRequest Request){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildError(HttpStatus.NO_CONTENT.value(),
+                ex.getMessage(),
+                Request.getRequestURI(),
+                mensagem
+        ));
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<String> handlerConflictionException(ConflictException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    public ResponseEntity<ErrorResponseDTO> handlerConflictionException(ConflictException ex,
+                                                                        HttpServletRequest Request) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(buildError(HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                Request.getRequestURI(),
+                mensagem
+        ));
     }
 
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<String> handlerUnhathorizedException(UnauthorizedException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<ErrorResponseDTO> handlerUnhathorizedException(UnauthorizedException ex,
+                                                               HttpServletRequest Request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(buildError(HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                Request.getRequestURI(),
+                mensagem
+        ));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handlerIllegalArgumentException(IllegalArgumentException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponseDTO> handlerIllegalArgumentException(IllegalArgumentException ex,
+                                                                  HttpServletRequest Request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildError(HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                Request.getRequestURI(),
+                mensagem
+        ));
     }
 
+    private ErrorResponseDTO buildError(int status, String message, String path, String error) {
+        return ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .message(message)
+                .error(error)
+                .status(status)
+                .path(path)
+                .build();
+    }
 }

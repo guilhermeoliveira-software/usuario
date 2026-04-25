@@ -9,18 +9,19 @@ import com.COSTADev.usuario.infrasctruture.entity.Telefone;
 import com.COSTADev.usuario.infrasctruture.entity.Usuario;
 import com.COSTADev.usuario.infrasctruture.exceptions.ConflictException;
 import com.COSTADev.usuario.infrasctruture.exceptions.ResourceNotFoundException;
+import com.COSTADev.usuario.infrasctruture.exceptions.UnauthorizedException;
 import com.COSTADev.usuario.infrasctruture.repository.EnderecosRepository;
 import com.COSTADev.usuario.infrasctruture.repository.TelefoneRepository;
 import com.COSTADev.usuario.infrasctruture.repository.UsuarioRepository;
 import com.COSTADev.usuario.infrasctruture.security.JwtUtil;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final EnderecosRepository enderecosRepository;
     private final TelefoneRepository telefoneRepository;
@@ -39,6 +41,17 @@ public class UsuarioService {
         usuarioDTO.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
         Usuario usuario = usuarioConverter.paraUsuario(usuarioDTO);
         return usuarioConverter.paraUsuarioDTO(usuarioRepository.save(usuario));
+    }
+
+    public String autenticarUsuario(UsuarioDTO usuarioDTO){
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            usuarioDTO.getEmail(), usuarioDTO.getSenha()));
+            return "Bearer " + jwtUtil.generateToken(authentication.getName());
+        } catch (BadCredentialsException | UsernameNotFoundException  e){
+            throw new UnauthorizedException("Usuario ou senha invalidos: ", e.getCause());
+        }
     }
 
     public void emailExiste(String email){

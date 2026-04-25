@@ -1,6 +1,4 @@
 package com.COSTADev.usuario.business.dto;
-
-import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter
