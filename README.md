@@ -1,67 +1,114 @@
-# Projeto Usuário
+# 👤 Gestão de Usuários
 
-## Descrição
+Microserviço responsável pelo gerenciamento de perfis de usuários, autenticação via **JWT** e integração com a **API ViaCEP** para validação de endereços.
 
-Este projeto é uma aplicação Spring Boot desenvolvida para gerenciar informações de usuários. Ele utiliza Java 21 e Gradle para construção, integrando-se com um banco de dados PostgreSQL via Docker Compose. A aplicação incorpora funcionalidades de segurança com Spring Security, persistência de dados com Spring Data JPA e comunicação entre serviços com OpenFeign.
+🔗 **API em produção:** [usuario-production-8686.up.railway.app/swagger-ui.html](https://usuario-production-8686.up.railway.app/swagger-ui.html)
 
-## Tecnologias Utilizadas
+---
 
-As principais tecnologias e ferramentas utilizadas neste projeto incluem:
+## 📌 Sobre o Projeto
 
-*   **Java 21**: Linguagem de programação principal.
-*   **Spring Boot 3.2.5**: Framework para construção de aplicações Java robustas e eficientes.
-*   **Gradle**: Ferramenta de automação de build.
-*   **Spring Data JPA**: Para persistência de dados e interação com o banco de dados.
-*   **Spring Security**: Para autenticação e autorização.
-*   **Spring Boot Starter Web**: Para a construção de aplicações web e APIs RESTful.
-*   **Spring Cloud Starter OpenFeign**: Para comunicação declarativa entre serviços.
-*   **Lombok**: Para reduzir o código boilerplate.
-*   **MySQL Connector/J**: Driver JDBC para conexão com MySQL (embora o docker-compose use PostgreSQL, o build.gradle lista MySQL Connector).
-*   **JUnit 5**: Para testes unitários e de integração.
-*   **SonarQube**: Para análise de qualidade de código.
-*   **Docker**: Para conteinerização da aplicação.
-*   **Docker Compose**: Para orquestração de serviços (aplicação e banco de dados PostgreSQL).
+Este serviço é parte de um ecossistema de microserviços para agendamento de tarefas. Ele é responsável por toda a camada de identidade e acesso, garantindo que apenas usuários autenticados possam interagir com os demais serviços.
 
-## Estrutura do Projeto
+| Serviço | Responsabilidade |
+|---|---|
+| [BFF Agendador](https://github.com/guilhermeoliveira-software/bff-agendador-tarefas) | Orquestração e gateway para o frontend |
+| **Gestão de Usuários** (este) | Autenticação e gerenciamento de perfis |
+| [Agendador de Tarefas](https://github.com/guilhermeoliveira-software/agendador-tarefas) | Ciclo de vida e agendamento das tarefas |
+| [Notificação por E-mail](https://github.com/guilhermeoliveira-software/notificacao) | Envio de e-mails e lembretes |
 
-A estrutura do projeto segue as convenções de um projeto Spring Boot, com pacotes organizados por funcionalidade:
+---
+
+## 🚀 Funcionalidades
+
+- Cadastro e atualização de perfis de usuários
+- Autenticação com **JWT** (tokens de curta duração)
+- Autorização com **Spring Security**
+- Integração com **API ViaCEP** para preenchimento automático de endereço
+- **Global Exception Handler** para padronização de erros
+- Documentação interativa via **Swagger**
+
+---
+
+## 🛠️ Tecnologias
+
+- **Java 21**
+- **Spring Boot 3.2.5**
+- **Spring Security + JWT**
+- **Spring Data JPA / Hibernate**
+- **PostgreSQL**
+- **Spring Cloud OpenFeign**
+- **Docker**
+- **CI/CD com GitHub Actions**
+- **SonarQube**
+- **Swagger / SpringDoc OpenAPI**
+- **Gradle**
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```
 src/
-├── main/
-│   ├── java/
-│   │   └── com/costadev/usuario/
-│   │       ├── business/             # Lógica de negócio e serviços
-│   │       ├── controller/           # Controladores REST
-│   │       └── infrasctruture/       # Configurações de infraestrutura e exceções
-│   └── resources/            # Arquivos de configuração e templates
-├── test/
-│   └── java/
-│       └── com/costadev/usuario/     # Testes unitários e de integração
-└── ...
+└── main/
+    └── java/
+        └── com/COSTADev/usuario/
+            ├── business/          # Lógica de negócio e serviços
+            ├── controller/        # Endpoints REST
+            └── infrastructure/    # Configurações de segurança, JPA e exceções
 ```
 
-## Como Executar
+---
 
-Para executar a aplicação localmente, siga os passos abaixo:
+## ⚙️ Como Executar Localmente
 
-1.  **Pré-requisitos**:
-    *   Java Development Kit (JDK) 21 ou superior.
-    *   Docker e Docker Compose instalados.
+### Pré-requisitos
+- Java 21+
+- Docker e Docker Compose
 
-2.  **Clonar o repositório**:
+### Passos
 
-    ```bash
-    git clone https://github.com/guilhermeoliveira-software/usuario.git
-    cd usuario
-    ```
+```bash
+# Clone o repositório
+git clone https://github.com/guilhermeoliveira-software/usuario.git
+cd usuario
 
-3.  **Configurar e iniciar com Docker Compose**:
+# Configure as variáveis de ambiente
+# Edite o application.properties com suas credenciais locais
 
-    ```bash
-    docker-compose up --build
-    ```
+# Suba com Docker Compose
+docker-compose up --build
+```
 
-    Isso irá construir a imagem da aplicação, iniciar o contêiner da aplicação e o banco de dados PostgreSQL. A aplicação estará disponível em `http://localhost:8080`.
+A API estará disponível em: `http://localhost:8080`
+Documentação Swagger: `http://localhost:8080/swagger-ui.html`
 
+---
 
+## 🌍 Variáveis de Ambiente
+
+| Variável | Descrição |
+|---|---|
+| `SPRING_DATASOURCE_URL` | URL de conexão com o PostgreSQL |
+| `SPRING_DATASOURCE_USERNAME` | Usuário do banco de dados |
+| `SPRING_DATASOURCE_PASSWORD` | Senha do banco de dados |
+| `VIACEP_URL` | URL da API ViaCEP |
+
+---
+
+## 🔐 Segurança
+
+A autenticação é feita via **JWT**. Para acessar endpoints protegidos:
+
+1. Faça login via `POST /auth/login`
+2. Copie o token retornado
+3. Adicione no header: `Authorization: Bearer {token}`
+
+---
+
+## 👨‍💻 Autor
+
+**José Guilherme Da Costa Oliveira**
+- 💼 [LinkedIn](https://www.linkedin.com/in/guilherme-costa-oliveiraa/)
+- 🐙 [GitHub](https://github.com/guilhermeoliveira-software)
+-
