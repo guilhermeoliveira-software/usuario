@@ -2,7 +2,6 @@
 
 Microserviço responsável pelo gerenciamento de perfis de usuários, autenticação via **JWT** e integração com a **API ViaCEP** para validação de endereços.
 
-🔗 **API em produção:** [usuario-production-8686.up.railway.app/swagger-ui.html](https://usuario-production-8686.up.railway.app/swagger-ui.html)
 
 ---
 
