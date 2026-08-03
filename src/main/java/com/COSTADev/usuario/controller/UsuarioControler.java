@@ -12,6 +12,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -133,4 +135,7 @@ public class UsuarioControler {
     public ResponseEntity<ViaCepDTO>bsucarDadosCep(@PathVariable("cep")String cep){
         return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));
     }
+
+
+    
 }
